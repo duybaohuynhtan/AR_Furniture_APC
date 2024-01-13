@@ -1,0 +1,28 @@
+name: ar_furniture_app
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.2.3 <4.0.0'
+
+dependencies:
+  babylonjs_viewer: ^1.0.1
+  flutter:
+    sdk: flutter
+  model_viewer_plus: ^1.7.0
+  concentric_transition: ^1.0.3
+  csv: ^5.1.1
+  animations: ^2.0.11
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+  - assets/models/
+  - assets/products/
+  - assets/
