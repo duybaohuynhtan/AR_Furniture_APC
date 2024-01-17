@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "123613869233",
+    "project_id": "arapp-a9b8c",
+    "storage_bucket": "arapp-a9b8c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123613869233:android:3b33cdfd768e6e1e4f9e90",
+        "android_client_info": {
+          "package_name": "com.example.ar_furniture_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUOVOEifBQPDOkGY71q_GKAtDw5x9lGro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
