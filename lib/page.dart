@@ -1,10 +1,11 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
-import 'package:animations/animations.dart';
+
+import 'main.dart';
 
 class FirstPage extends StatelessWidget {
-  final List<List<dynamic>> productList;
-  const FirstPage({Key? key, required this.productList}) : super(key: key);
+  const FirstPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +15,46 @@ class FirstPage extends StatelessWidget {
       theme: ThemeData(brightness: Brightness.dark),
       home: Scaffold(
         appBar: AppBar(
-            title: const Center(
-          child: Text(
-            "AR Furniture",
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          title: const Center(
+            child: Text(
+              "AR Furniture",
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
           ),
-        )),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<ProfileScreen>(
+                    builder: (context) => ProfileScreen(
+                      appBar: AppBar(
+                        title: const Text('User Profile'),
+                      ),
+                      actions: [
+                        SignedOutAction((context) {
+                          Navigator.of(context).pop();
+                        })
+                      ],
+                      children: [
+                        const Divider(),
+                        Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: Image.asset('assets/flutterfire_300x.png'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            )
+          ],
+          automaticallyImplyLeading: false,
+        ),
         body: SingleChildScrollView(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

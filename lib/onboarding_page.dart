@@ -1,3 +1,4 @@
+import 'package:ar_furniture_app/auth_gate.dart';
 import 'package:ar_furniture_app/page.dart';
 import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +25,7 @@ final pages = [
 ];
 
 class ConcentricAnimationOnboarding extends StatelessWidget {
-  final List<List<dynamic>> productList;
-  const ConcentricAnimationOnboarding({Key? key, required this.productList})
-      : super(key: key);
+  const ConcentricAnimationOnboarding({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +51,7 @@ class ConcentricAnimationOnboarding extends StatelessWidget {
         itemBuilder: (index) {
           final page = pages[index % pages.length];
           return SafeArea(
-            child: _Page(page: page, productList: productList),
+            child: _Page(page: page),
           );
         },
       ),
@@ -76,10 +75,7 @@ class PageData {
 
 class _Page extends StatelessWidget {
   final PageData page;
-  final List<List<dynamic>> productList;
-
-  const _Page({Key? key, required this.page, required this.productList})
-      : super(key: key);
+  const _Page({Key? key, required this.page}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -121,10 +117,8 @@ class _Page extends StatelessWidget {
             shadowColor: Colors.black.withOpacity(1),
           ),
           onPressed: () {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => FirstPage(productList: productList)));
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const AuthGate()));
           },
           child: Text(
             "Buy Now!",
