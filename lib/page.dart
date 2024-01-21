@@ -1,7 +1,6 @@
+import 'package:ar_furniture_app/second_page.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:model_viewer_plus/model_viewer_plus.dart';
-
 import 'main.dart';
 
 class FirstPage extends StatelessWidget {
@@ -71,8 +70,7 @@ class FirstPage extends StatelessWidget {
                       return InkWell(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => SecondPage(
-                                  index: index, productList: productList)));
+                              builder: (context) => SecondPage(index: index)));
                         },
                         child: Card(
                           elevation: 10,
@@ -132,39 +130,6 @@ class FirstPage extends StatelessWidget {
                 ),
               ]),
         ),
-      ),
-    );
-  }
-}
-
-class SecondPage extends StatelessWidget {
-  final int index;
-  final List<List<dynamic>> productList;
-
-  const SecondPage({super.key, required this.index, required this.productList});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: Text(
-        productList[index][0],
-        style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-      )),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 300,
-            child: ModelViewer(
-              backgroundColor: const Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
-              src: productList[index][3],
-              ar: true,
-              arPlacement: ArPlacement.floor,
-              autoRotate: true,
-              cameraControls: true,
-            ),
-          ),
-        ],
       ),
     );
   }
