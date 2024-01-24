@@ -67,7 +67,6 @@ class FirstPage extends StatelessWidget {
               },
             ),
           ],
-          automaticallyImplyLeading: false,
         ),
         body: const SafeArea(
           child: App(),

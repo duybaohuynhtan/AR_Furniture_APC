@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:provider/provider.dart';
 
+import 'cart_firestore.dart';
+import 'cart_item.dart';
 import 'cart_page.dart';
 import 'cart_provider.dart';
 import 'main.dart';
@@ -98,9 +100,12 @@ class SecondPage extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          Provider.of<CartProvider>(context, listen: false)
-                              .addToCart(
-                                  productList[index][0], productList[index][1]);
+                          CartItem newItem = CartItem(
+                            productName: productList[index][0],
+                            quantity: 1,
+                            price: productList[index][1],
+                          );
+                          CartManager().addToCart(newItem);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
