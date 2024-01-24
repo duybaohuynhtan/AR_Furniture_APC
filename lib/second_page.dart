@@ -1,3 +1,4 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
@@ -20,6 +21,49 @@ class SecondPage extends StatelessWidget {
           productList[index][0],
           style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<ProfileScreen>(
+                  builder: (context) => ProfileScreen(
+                    appBar: AppBar(
+                      title: const Text('User Profile'),
+                    ),
+                    actions: [
+                      SignedOutAction((context) {
+                        Navigator.of(context).pop();
+                      })
+                    ],
+                    children: [
+                      const Divider(),
+                      Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: Image.asset('assets/flutterfire_300x.png'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.shopping_basket),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<ProfileScreen>(
+                  builder: (context) => CartPage(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -45,27 +89,11 @@ class SecondPage extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(
-                  height:
-                      40), // Add some space between the ModelViewer and buttons
+                height: 40,
+              ), // Add some space between the ModelViewer and buttons
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Column(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CartPage(),
-                            ),
-                          );
-                        },
-                        child: const Icon(Icons.shopping_basket),
-                      ),
-                      const Text('Cart'),
-                    ],
-                  ),
                   Column(
                     children: [
                       ElevatedButton(

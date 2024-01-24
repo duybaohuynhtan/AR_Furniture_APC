@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 import 'Product.dart';
+import 'cart_page.dart';
 import 'main.dart';
 
 class FirstPage extends StatelessWidget {
@@ -53,7 +54,18 @@ class FirstPage extends StatelessWidget {
                   ),
                 );
               },
-            )
+            ),
+            IconButton(
+              icon: const Icon(Icons.shopping_basket),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute<ProfileScreen>(
+                    builder: (context) => CartPage(),
+                  ),
+                );
+              },
+            ),
           ],
           automaticallyImplyLeading: false,
         ),
