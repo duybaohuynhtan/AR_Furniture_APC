@@ -6,15 +6,6 @@ import 'package:flutter/material.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
-  Future<String?> getUserUid() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      return user.uid;
-    } else {
-      // If user is not logged in, return null or handle it as needed
-      return null;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +48,12 @@ class AuthGate extends StatelessWidget {
             },
           );
         }
-        return const FirstPage();
+        return MaterialApp(
+          title: 'AR Furniture App',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(brightness: Brightness.dark),
+          home: const FirstPage(),
+        );
       },
     );
   }

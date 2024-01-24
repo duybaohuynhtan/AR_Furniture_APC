@@ -12,65 +12,60 @@ class FirstPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'AR Furniture App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(brightness: Brightness.dark),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Center(
-            child: Text(
-              "AR Furniture",
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Center(
+          child: Text(
+            "AR Furniture",
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.person),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<ProfileScreen>(
-                    builder: (context) => ProfileScreen(
-                      appBar: AppBar(
-                        title: const Text('User Profile'),
-                      ),
-                      actions: [
-                        SignedOutAction((context) {
-                          Navigator.of(context).pop();
-                        })
-                      ],
-                      children: [
-                        const Divider(),
-                        Padding(
-                          padding: const EdgeInsets.all(2),
-                          child: AspectRatio(
-                            aspectRatio: 1,
-                            child: Image.asset('assets/flutterfire_300x.png'),
-                          ),
-                        ),
-                      ],
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<ProfileScreen>(
+                  builder: (context) => ProfileScreen(
+                    appBar: AppBar(
+                      title: const Text('User Profile'),
                     ),
+                    actions: [
+                      SignedOutAction((context) {
+                        Navigator.of(context).pop();
+                      })
+                    ],
+                    children: [
+                      const Divider(),
+                      Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: Image.asset('assets/flutterfire_300x.png'),
+                        ),
+                      ),
+                    ],
                   ),
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.shopping_basket),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<ProfileScreen>(
-                    builder: (context) => CartPage(),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-        body: const SafeArea(
-          child: App(),
-        ),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.shopping_basket),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<ProfileScreen>(
+                  builder: (context) => CartPage(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      body: const SafeArea(
+        child: App(),
       ),
     );
   }
