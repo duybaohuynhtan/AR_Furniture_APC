@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 
@@ -72,7 +73,9 @@ class _SecondPageState extends State<SecondPage> {
                                 });
                               }
                               // Navigate to Like page
-                              print('Navigating to Like page...');
+                              if (kDebugMode) {
+                                print('Navigating to Like page...');
+                              }
                               /*Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (context) => LikePage()),
@@ -118,7 +121,9 @@ class _SecondPageState extends State<SecondPage> {
                                 });
                               }
                               // Navigate to Cart page
-                              print('Navigating to Cart page...');
+                              if (kDebugMode) {
+                                print('Navigating to Cart page...');
+                              }
                               /*Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (context) => CartPage()),
@@ -152,7 +157,9 @@ class _SecondPageState extends State<SecondPage> {
                         icon: const Icon(Icons.payment),
                         onPressed: () {
                           // Navigate to Payment page
-                          print('Navigating to Payment page...');
+                          if (kDebugMode) {
+                            print('Navigating to Payment page...');
+                          }
                           /*Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => PaymentPage()),
