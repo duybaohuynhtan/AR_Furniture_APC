@@ -1,5 +1,4 @@
 import 'package:ar_furniture_app/auth_gate.dart';
-import 'package:ar_furniture_app/page.dart';
 import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
 
