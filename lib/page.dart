@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 import 'Product.dart';
+import 'cart_page.dart';
 import 'main.dart';
 
 class FirstPage extends StatelessWidget {
@@ -11,55 +12,63 @@ class FirstPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'AR Furniture App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(brightness: Brightness.dark),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Center(
-            child: Text(
-              "AR Furniture",
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            ),
+    final GlobalKey<_AppState> childKey = GlobalKey();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Center(
+          child: Text(
+            "AR Furniture",
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.person),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute<ProfileScreen>(
-                    builder: (context) => ProfileScreen(
-                      appBar: AppBar(
-                        title: const Text('User Profile'),
-                      ),
-                      actions: [
-                        SignedOutAction((context) {
-                          Navigator.of(context).pop();
-                        })
-                      ],
-                      children: [
-                        const Divider(),
-                        Padding(
-                          padding: const EdgeInsets.all(2),
-                          child: AspectRatio(
-                            aspectRatio: 1,
-                            child: Image.asset('assets/flutterfire_300x.png'),
-                          ),
-                        ),
-                      ],
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<ProfileScreen>(
+                  builder: (context) => ProfileScreen(
+                    appBar: AppBar(
+                      title: const Text('User Profile'),
                     ),
+                    actions: [
+                      SignedOutAction((context) {
+                        Navigator.of(context).pop();
+                        childKey.currentState?.clearProducts();
+                        (context as Element).markNeedsBuild();
+                      })
+                    ],
+                    children: [
+                      const Divider(),
+                      Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: Image.asset('assets/flutterfire_300x.png'),
+                        ),
+                      ),
+                    ],
                   ),
-                );
-              },
-            )
-          ],
-          automaticallyImplyLeading: false,
-        ),
-        body: const SafeArea(
-          child: App(),
-        ),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.shopping_basket),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<ProfileScreen>(
+                  builder: (context) => CartPage(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: App(key: childKey),
       ),
     );
   }
@@ -74,18 +83,21 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final List<Product> products = [];
-  static int indexx = 0;
+
+  int indexx = 0;
 
   @override
   Widget build(BuildContext context) {
     for (var product in productList) {
-      products.add(Product(
-        index: indexx,
-        name: '${product[0]}',
-        img: "${product[2]}",
-        price: "${product[1]} ¥",
-        type: "${product[4]}",
-      ));
+      products.add(
+        Product(
+          index: indexx,
+          name: '${product[0]}',
+          img: "${product[2]}",
+          price: "${product[1]} ¥",
+          type: "${product[4]}",
+        ),
+      );
       indexx++;
     }
     return SizedBox(
@@ -158,6 +170,10 @@ class _AppState extends State<App> {
       ),
       closeKeyboardWhenScrolling: true,
     );
+  }
+
+  void clearProducts() {
+    products.clear();
   }
 }
 
