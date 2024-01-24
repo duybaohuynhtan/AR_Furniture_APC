@@ -1,28 +1,23 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
+import 'package:provider/provider.dart';
 
+import 'cart_page.dart';
+import 'cart_provider.dart';
 import 'main.dart';
 
-class SecondPage extends StatefulWidget {
+class SecondPage extends StatelessWidget {
   final int index;
 
   const SecondPage({super.key, required this.index});
-
-  @override
-  _SecondPageState createState() => _SecondPageState();
-}
-
-class _SecondPageState extends State<SecondPage> {
-  bool addedToLikes = false;
-  bool addedToCart = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          productList[widget.index][0],
+          productList[index][0],
           style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
       ),
@@ -36,7 +31,7 @@ class _SecondPageState extends State<SecondPage> {
               flexibleSpace: FlexibleSpaceBar(
                 background: ModelViewer(
                   backgroundColor: const Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
-                  src: productList[widget.index][3],
+                  src: productList[index][3],
                   ar: true,
                   arPlacement: ArPlacement.floor,
                   autoRotate: true,
@@ -57,96 +52,36 @@ class _SecondPageState extends State<SecondPage> {
                 children: [
                   Column(
                     children: [
-                      Stack(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.favorite),
-                            onPressed: () {
-                              setState(() {
-                                addedToLikes = !addedToLikes;
-                              });
-                              if (addedToLikes) {
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  setState(() {
-                                    addedToLikes = false;
-                                  });
-                                });
-                              }
-                              // Navigate to Like page
-                              if (kDebugMode) {
-                                print('Navigating to Like page...');
-                              }
-                              /*Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => LikePage()),
-                              );*/
-                            },
-                          ),
-                          if (addedToLikes)
-                            const Positioned(
-                              top: -2,
-                              left: 7,
-                              child: AnimatedOpacity(
-                                opacity: 1.0,
-                                duration: Duration(seconds: 1),
-                                curve: Curves.easeInCirc,
-                                child: Text(
-                                  'Liked!',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CartPage(),
                             ),
-                        ],
+                          );
+                        },
+                        child: const Icon(Icons.shopping_basket),
                       ),
-                      const Text('Like'),
+                      const Text('Cart'),
                     ],
                   ),
                   Column(
                     children: [
-                      Stack(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.add_shopping_cart),
-                            onPressed: () {
-                              setState(() {
-                                addedToCart = !addedToCart;
-                              });
-                              if (addedToCart) {
-                                Future.delayed(const Duration(seconds: 2), () {
-                                  setState(() {
-                                    addedToCart = false;
-                                  });
-                                });
-                              }
-                              // Navigate to Cart page
-                              if (kDebugMode) {
-                                print('Navigating to Cart page...');
-                              }
-                              /*Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => CartPage()),
-                              );*/
-                            },
-                          ),
-                          if (addedToCart)
-                            const Positioned(
-                              top: -2,
-                              left: 4,
-                              child: AnimatedOpacity(
-                                opacity: 1.0,
-                                duration: Duration(seconds: 1),
-                                curve: Curves.easeInCirc,
-                                child: Text(
-                                  'Added!',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Provider.of<CartProvider>(context, listen: false)
+                              .addToCart(
+                                  productList[index][0], productList[index][1]);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  "Added ${productList[index][0]} to Cart"),
+                              duration: const Duration(milliseconds: 2000),
                             ),
-                        ],
+                          );
+                        },
+                        child: const Icon(Icons.add_shopping_cart),
                       ),
                       const Text('Add to Cart'),
                     ],
@@ -172,8 +107,7 @@ class _SecondPageState extends State<SecondPage> {
                 ],
               ),
               const SizedBox(height: 50), // Add some space
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
+              Container(
                 width: 370, // Set your desired width
                 height: 300, // Set your desired height
                 decoration: BoxDecoration(
@@ -194,8 +128,8 @@ class _SecondPageState extends State<SecondPage> {
                       ),
                     ),
                     SizedBox(
-                        height:
-                            8), // Add some space between 'Description' and the rest of the text
+                      height: 8,
+                    ), // Add some space between 'Description' and the rest of the text
                     Text(
                       'This is a cool 360 no scope ergonomic chair from Herman Miller.',
                       style: TextStyle(

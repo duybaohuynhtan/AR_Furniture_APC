@@ -79,13 +79,15 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     for (var product in productList) {
-      products.add(Product(
-        index: indexx,
-        name: '${product[0]}',
-        img: "${product[2]}",
-        price: "${product[1]} ¥",
-        type: "${product[4]}",
-      ));
+      products.add(
+        Product(
+          index: indexx,
+          name: '${product[0]}',
+          img: "${product[2]}",
+          price: "${product[1]} ¥",
+          type: "${product[4]}",
+        ),
+      );
       indexx++;
     }
     return SizedBox(

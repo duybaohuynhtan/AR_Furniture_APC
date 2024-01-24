@@ -3,7 +3,9 @@ import 'package:csv/csv.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
+import 'cart_provider.dart';
 import 'firebase_options.dart';
 
 List<List<dynamic>> productList = [];
@@ -20,9 +22,14 @@ void main() async {
   );
 
   runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ConcentricAnimationOnboarding(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+      ],
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: ConcentricAnimationOnboarding(),
+      ),
     ),
   );
 }
