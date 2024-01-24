@@ -1,5 +1,4 @@
 import 'package:ar_furniture_app/second_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
@@ -13,6 +12,7 @@ class FirstPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<_AppState> childKey = GlobalKey();
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -35,6 +35,8 @@ class FirstPage extends StatelessWidget {
                     actions: [
                       SignedOutAction((context) {
                         Navigator.of(context).pop();
+                        childKey.currentState?.clearProducts();
+                        (context as Element).markNeedsBuild();
                       })
                     ],
                     children: [
@@ -65,8 +67,8 @@ class FirstPage extends StatelessWidget {
           ),
         ],
       ),
-      body: const SafeArea(
-        child: App(),
+      body: SafeArea(
+        child: App(key: childKey),
       ),
     );
   }
@@ -81,7 +83,8 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final List<Product> products = [];
-  static int indexx = 0;
+
+  int indexx = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -167,6 +170,10 @@ class _AppState extends State<App> {
       ),
       closeKeyboardWhenScrolling: true,
     );
+  }
+
+  void clearProducts() {
+    products.clear();
   }
 }
 
