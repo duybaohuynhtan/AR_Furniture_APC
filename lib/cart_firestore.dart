@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'auth_gate.dart';
 import 'cart_item.dart';
 
 class CartManager {
-  final CollectionReference cartCollection =
-      FirebaseFirestore.instance.collection('carts');
+  final CollectionReference cartCollection = FirebaseFirestore.instance
+      .collection('carts')
+      .doc(userUID)
+      .collection('products');
 
   Future<void> addToCart(CartItem item) async {
     var existingItem = await cartCollection.doc(item.productName).get();
@@ -34,6 +37,7 @@ class CartManager {
       return snapshot.docs.map((doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         return CartItem(
+          userUID: userUID.toString(),
           productName: data['productName'],
           quantity: data['quantity'],
           price: data['price'],

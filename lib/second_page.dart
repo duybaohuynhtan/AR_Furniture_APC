@@ -1,13 +1,14 @@
+import 'package:ar_furniture_app/page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
-import 'package:provider/provider.dart';
 
+import 'auth_gate.dart';
 import 'cart_firestore.dart';
 import 'cart_item.dart';
 import 'cart_page.dart';
-import 'cart_provider.dart';
 import 'main.dart';
 
 class SecondPage extends StatelessWidget {
@@ -56,7 +57,7 @@ class SecondPage extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(Icons.shopping_basket),
-            onPressed: () {
+            onPressed: () async {
               Navigator.push(
                 context,
                 MaterialPageRoute<ProfileScreen>(
@@ -99,8 +100,9 @@ class SecondPage extends StatelessWidget {
                   Column(
                     children: [
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           CartItem newItem = CartItem(
+                            userUID: userUID,
                             productName: productList[index][0],
                             quantity: 1,
                             price: productList[index][1],

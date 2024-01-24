@@ -4,6 +4,8 @@ import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/material.dart';
 
+String userUID = "";
+
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
 
@@ -48,6 +50,7 @@ class AuthGate extends StatelessWidget {
             },
           );
         }
+        userUID = FirebaseAuth.instance.currentUser!.uid;
         return MaterialApp(
           title: 'AR Furniture App',
           debugShowCheckedModeBanner: false,

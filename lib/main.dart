@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'cart_provider.dart';
 import 'firebase_options.dart';
 
 List<List<dynamic>> productList = [];
@@ -22,14 +21,9 @@ void main() async {
   );
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => CartProvider()),
-      ],
-      child: const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: ConcentricAnimationOnboarding(),
-      ),
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ConcentricAnimationOnboarding(),
     ),
   );
 }

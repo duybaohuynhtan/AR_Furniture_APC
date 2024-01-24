@@ -117,8 +117,17 @@ class _Page extends StatelessWidget {
             shadowColor: Colors.black.withOpacity(1),
           ),
           onPressed: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const AuthGate()));
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MaterialApp(
+                  title: 'AR Furniture App',
+                  debugShowCheckedModeBanner: false,
+                  theme: ThemeData(brightness: Brightness.dark),
+                  home: const AuthGate(),
+                ),
+              ),
+            );
           },
           child: Text(
             "Buy Now!",
