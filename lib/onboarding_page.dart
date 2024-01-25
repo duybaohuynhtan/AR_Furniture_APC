@@ -1,144 +1,237 @@
-import 'package:ar_furniture_app/auth_gate.dart';
-import 'package:ar_furniture_app/page.dart';
-import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
 
-final pages = [
-  const PageData(
-    icon: Icons.chair_outlined,
-    title: "Search for your furniture",
-    bgColor: Color(0xff3b1791),
-    textColor: Colors.white,
-  ),
-  const PageData(
-    icon: Icons.shopping_bag_outlined,
-    title: "Add it to cart",
-    bgColor: Color(0xfffab800),
-    textColor: Color(0xff3b1790),
-  ),
-  const PageData(
-    icon: Icons.view_in_ar_outlined,
-    title: "View in your space",
-    bgColor: Color(0xffffffff),
-    textColor: Color(0xff3b1790),
-  ),
-];
+import 'auth_gate.dart';
 
-class ConcentricAnimationOnboarding extends StatelessWidget {
-  const ConcentricAnimationOnboarding({super.key});
-
+class IntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: ConcentricPageView(
-        colors: pages.map((p) => p.bgColor).toList(),
-        radius: screenWidth * 0.1,
-        nextButtonBuilder: (context) => Padding(
-          padding: const EdgeInsets.all(5), // visual center
-          child: Icon(
-            Icons.navigate_next,
-            size: screenWidth * 0.1,
+    return MaterialApp(
+      title: 'Onboarding',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: OnboardingPage(
+        pages: [
+          OnboardingPageModel(
+            title: 'Welcome to AR Furniture!',
+            description:
+                'Step into a virtual world of furniture. Explore and design your space like never before.',
+            icon: Icons.chair_outlined,
+            bgColor: Colors.indigo,
           ),
-        ),
-        // itemCount: pages.length,
-        // opacityFactor: 10.0,
-        // scaleFactor: 2,
-        // verticalPosition: 0.7,
-        // direction: Axis.vertical,
-        // itemCount: pages.length,
-        // physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (index) {
-          final page = pages[index % pages.length];
-          return SafeArea(
-            child: _Page(page: page),
-          );
-        },
+          OnboardingPageModel(
+            title: 'Easy AR Integration',
+            description:
+                'Choose, scan, place. Simple steps to bring virtual furniture into your real world.',
+            icon: Icons.view_in_ar_outlined,
+            bgColor: const Color(0xff1eb090),
+          ),
+          OnboardingPageModel(
+            title: 'Discover Your Style',
+            description:
+                'Explore our catalog. Find furniture that suits your style perfectly.',
+            icon: Icons.style_outlined,
+            bgColor: const Color(0xfffeae4f),
+          ),
+          OnboardingPageModel(
+            title: 'Bring Your Vision to Life',
+            description:
+                'Place furniture, find your style. Start transforming your space now!',
+            icon: Icons.shopping_bag_outlined,
+            bgColor: Colors.purple,
+          ),
+        ],
       ),
     );
   }
 }
 
-class PageData {
-  final String? title;
-  final IconData? icon;
+class OnboardingPageModel {
+  final String title;
+  final String description;
+  final IconData icon;
   final Color bgColor;
   final Color textColor;
 
-  const PageData({
-    this.title,
-    this.icon,
-    this.bgColor = Colors.white,
-    this.textColor = Colors.black,
-  });
+  OnboardingPageModel(
+      {required this.title,
+      required this.description,
+      required this.icon,
+      this.bgColor = Colors.blue,
+      this.textColor = Colors.white});
 }
 
-class _Page extends StatelessWidget {
-  final PageData page;
-  const _Page({Key? key, required this.page}) : super(key: key);
+class OnboardingPage extends StatefulWidget {
+  final List<OnboardingPageModel> pages;
+
+  const OnboardingPage({Key? key, required this.pages}) : super(key: key);
+
+  @override
+  _OnboardingPageState createState() => _OnboardingPageState();
+}
+
+class _OnboardingPageState extends State<OnboardingPage> {
+  // Store the currently visible page
+  int _currentPage = 0;
+  // Define a controller for the pageview
+  final PageController _pageController = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(30.0),
-          margin: const EdgeInsets.all(50.0),
-          decoration:
-              BoxDecoration(shape: BoxShape.circle, color: page.textColor),
-          child: Icon(
-            page.icon,
-            size: screenHeight * 0.1,
-            color: page.bgColor,
-          ),
-        ),
-        Text(
-          page.title ?? "",
-          style: TextStyle(
-              color: page.textColor,
-              fontSize: screenHeight * 0.04,
-              fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        ElevatedButton(
-          style: TextButton.styleFrom(
-            alignment: Alignment.bottomCenter,
-            foregroundColor: page.bgColor,
-            backgroundColor: page.textColor,
-            padding: const EdgeInsets.all(10),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            elevation: 10,
-            shadowColor: Colors.black.withOpacity(1),
-          ),
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => MaterialApp(
-                  title: 'AR Furniture App',
-                  debugShowCheckedModeBanner: false,
-                  theme: ThemeData(brightness: Brightness.dark),
-                  home: const AuthGate(),
+    return Scaffold(
+      body: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        color: widget.pages[_currentPage].bgColor,
+        child: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                // Pageview to render each page
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: widget.pages.length,
+                  onPageChanged: (idx) {
+                    // Change current page when pageview changes
+                    setState(() {
+                      _currentPage = idx;
+                    });
+                  },
+                  itemBuilder: (context, idx) {
+                    final item = widget.pages[idx];
+                    return Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(30.0),
+                          margin: const EdgeInsets.fromLTRB(50, 100, 50, 100),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: item.textColor,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 20.0,
+                                color: Colors.black.withOpacity(0.5),
+                                offset: const Offset(10, 25),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            item.icon,
+                            size: MediaQuery.of(context).size.height * 0.3,
+                            color: item.bgColor,
+                          ),
+                        ),
+                        Expanded(
+                            flex: 1,
+                            child: Column(children: [
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(item.title,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: item.textColor,
+                                        )),
+                              ),
+                              Container(
+                                constraints:
+                                    const BoxConstraints(maxWidth: 280),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0, vertical: 8.0),
+                                child: Text(item.description,
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                          color: item.textColor,
+                                        )),
+                              )
+                            ]))
+                      ],
+                    );
+                  },
                 ),
               ),
-            );
-          },
-          child: Text(
-            "Buy Now!",
-            style: TextStyle(
-                fontSize: screenHeight * 0.02, fontWeight: FontWeight.bold),
+
+              // Current page indicator
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: widget.pages
+                    .map((item) => AnimatedContainer(
+                          duration: const Duration(milliseconds: 250),
+                          width: _currentPage == widget.pages.indexOf(item)
+                              ? 20
+                              : 4,
+                          height: 4,
+                          margin: const EdgeInsets.all(2.0),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10.0)),
+                        ))
+                    .toList(),
+              ),
+
+              // Bottom buttons
+              SizedBox(
+                height: 100,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MaterialApp(
+                                title: 'AR Furniture App',
+                                debugShowCheckedModeBanner: false,
+                                theme: ThemeData(brightness: Brightness.dark),
+                                home: const AuthGate(),
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          "Skip",
+                          style: TextStyle(color: Colors.white),
+                        )),
+                    TextButton(
+                      onPressed: () {
+                        if (_currentPage == widget.pages.length - 1) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MaterialApp(
+                                title: 'AR Furniture App',
+                                debugShowCheckedModeBanner: false,
+                                theme: ThemeData(brightness: Brightness.dark),
+                                home: const AuthGate(),
+                              ),
+                            ),
+                          );
+                        } else {
+                          _pageController.animateToPage(_currentPage + 1,
+                              curve: Curves.easeInOutCubic,
+                              duration: const Duration(milliseconds: 250));
+                        }
+                      },
+                      child: Text(
+                        _currentPage == widget.pages.length - 1
+                            ? "Finish"
+                            : "Next",
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
-        const SizedBox(
-          height: 100,
-        ),
-      ],
+      ),
     );
   }
 }

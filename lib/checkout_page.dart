@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-
 import 'cart_firestore.dart';
 import 'cart_item.dart';
-import 'checkout_page.dart';
 import 'first_page.dart';
 
-class CartPage extends StatelessWidget {
-  final CartManager cartManager = CartManager();
+class CheckoutScreen extends StatelessWidget {
+  final CartManager _cartManager = CartManager();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Cart'),
+        title: const Text('Checkout'),
       ),
       body: StreamBuilder<List<CartItem>>(
-        stream: cartManager.getCartItems(),
+        stream: _cartManager.getCartItems(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             if (snapshot.hasData && snapshot.data!.isNotEmpty) {
@@ -69,51 +67,43 @@ class CartPage extends StatelessWidget {
                                       const SizedBox(
                                         width: 15,
                                       ),
-                                      SizedBox(
-                                        width: 180,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              cartItem.productName,
-                                              style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            cartItem.productName,
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
                                             ),
-                                            const SizedBox(
-                                              height: 10,
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            '${cartItem.price} ¥ x ${cartItem.quantity}',
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.grey,
                                             ),
-                                            Text(
-                                              '${cartItem.price} ¥ x ${cartItem.quantity}',
-                                              style: const TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              '$itemTotal  ¥',
-                                              style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.green,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                      IconButton(
-                                        icon: const Icon(Icons.remove),
-                                        onPressed: () {
-                                          cartManager.removeFromCart(
-                                              cartItems[index].productName);
-                                        },
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                            '$itemTotal  ¥',
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.green,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -148,13 +138,10 @@ class CartPage extends StatelessWidget {
                         const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CheckoutScreen()));
+                            // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => PaymentScreen()));
                           },
                           child: const Text(
-                            'Checkout',
+                            'Pay Now',
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,

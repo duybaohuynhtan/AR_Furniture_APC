@@ -1,9 +1,9 @@
+import 'package:ar_furniture_app/product_controller.dart';
 import 'package:ar_furniture_app/second_page.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
-import 'Product.dart';
 import 'cart_page.dart';
 import 'main.dart';
 
@@ -15,11 +15,9 @@ class FirstPage extends StatelessWidget {
     final GlobalKey<_AppState> childKey = GlobalKey();
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text(
-            "AR Furniture",
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-          ),
+        title: const Text(
+          "AR Furniture",
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(
@@ -41,13 +39,6 @@ class FirstPage extends StatelessWidget {
                     ],
                     children: [
                       const Divider(),
-                      Padding(
-                        padding: const EdgeInsets.all(2),
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: Image.asset('assets/flutterfire_300x.png'),
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -55,7 +46,7 @@ class FirstPage extends StatelessWidget {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.shopping_basket),
+            icon: const Icon(Icons.shopping_bag),
             onPressed: () {
               Navigator.push(
                 context,

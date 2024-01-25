@@ -1,6 +1,6 @@
 class Product {
   int index;
-  String name ;
+  String name;
   String img;
   String price;
   String type;
@@ -13,4 +13,3 @@ class Product {
     required this.type,
   });
 }
-

@@ -22,6 +22,7 @@ class CartManager {
         'productName': item.productName,
         'quantity': 1,
         'price': item.price,
+        'imageUrl': item.imageUrl,
       });
     }
   }
@@ -43,11 +44,11 @@ class CartManager {
       return snapshot.docs.map((doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         return CartItem(
-          userUID: userUID.toString(),
-          productName: data['productName'],
-          quantity: data['quantity'],
-          price: data['price'],
-        );
+            userUID: userUID.toString(),
+            productName: data['productName'],
+            quantity: data['quantity'],
+            price: data['price'],
+            imageUrl: data['imageUrl']);
       }).toList();
     });
   }

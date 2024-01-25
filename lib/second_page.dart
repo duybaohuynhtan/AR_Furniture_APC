@@ -1,7 +1,5 @@
-import 'package:ar_furniture_app/page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ar_furniture_app/checkout_page.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 
@@ -40,15 +38,8 @@ class SecondPage extends StatelessWidget {
                         Navigator.of(context).pop();
                       })
                     ],
-                    children: [
-                      const Divider(),
-                      Padding(
-                        padding: const EdgeInsets.all(2),
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: Image.asset('assets/flutterfire_300x.png'),
-                        ),
-                      ),
+                    children: const [
+                      Divider(),
                     ],
                   ),
                 ),
@@ -56,7 +47,7 @@ class SecondPage extends StatelessWidget {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.shopping_basket),
+            icon: const Icon(Icons.shopping_bag),
             onPressed: () async {
               Navigator.push(
                 context,
@@ -92,59 +83,88 @@ class SecondPage extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(
-                height: 40,
-              ), // Add some space between the ModelViewer and buttons
+                height: 30,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Column(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () async {
-                          CartItem newItem = CartItem(
-                            userUID: userUID,
-                            productName: productList[index][0],
-                            quantity: 1,
-                            price: productList[index][1],
-                          );
-                          CartManager().addToCart(newItem);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                  "Added ${productList[index][0]} to Cart"),
-                              duration: const Duration(milliseconds: 2000),
-                            ),
-                          );
-                        },
-                        child: const Icon(Icons.add_shopping_cart),
-                      ),
-                      const Text('Add to Cart'),
-                    ],
+                  ElevatedButton(
+                    onPressed: () async {
+                      CartItem newItem = CartItem(
+                        userUID: userUID,
+                        productName: productList[index][0],
+                        quantity: 1,
+                        price: productList[index][1],
+                        imageUrl: productList[index][2],
+                      );
+                      CartManager().addToCart(newItem);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content:
+                              Text("Added ${productList[index][0]} to Cart"),
+                          duration: const Duration(milliseconds: 100),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      elevation: 10.0,
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.add_shopping_cart,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 20.0,
+                        ),
+                        Text('Add to Cart',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            )),
+                      ],
+                    ),
                   ),
-                  Column(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.payment),
-                        onPressed: () {
-                          // Navigate to Payment page
-                          if (kDebugMode) {
-                            print('Navigating to Payment page...');
-                          }
-                          /*Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => PaymentPage()),
-                          );*/
-                        },
-                      ),
-                      const Text('Buy Now'),
-                    ],
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<ProfileScreen>(
+                          builder: (context) => CheckoutScreen(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      elevation: 10.0,
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.payments_outlined,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 20.0,
+                        ),
+                        Text('Buy Now',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            )),
+                      ],
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 50), // Add some space
+              const SizedBox(height: 30), // Add some space
               Container(
-                width: 370, // Set your desired width
-                height: 300, // Set your desired height
+                width: 370,
+                height: 300,
                 decoration: BoxDecoration(
                   color: Colors.grey, // Set your desired background color
                   borderRadius: BorderRadius.circular(
