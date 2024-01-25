@@ -13,13 +13,11 @@ class CartManager {
     var existingItem = await cartCollection.doc(item.productName).get();
 
     if (existingItem.exists) {
-      // Nếu sản phẩm đã tồn tại, tăng số lượng
       await cartCollection.doc(item.productName).update({
         'quantity': FieldValue.increment(item.quantity),
         'price': item.price,
       });
     } else {
-      // Nếu sản phẩm chưa tồn tại, tạo mới với số lượng là 1
       await cartCollection.doc(item.productName).set({
         'productName': item.productName,
         'quantity': 1,
@@ -29,7 +27,15 @@ class CartManager {
   }
 
   Future<void> removeFromCart(String productName) async {
-    await cartCollection.doc(productName).delete();
+    var removeItem = await cartCollection.doc(productName).get();
+
+    if (removeItem['quantity'] > 1) {
+      await cartCollection.doc(productName).update({
+        'quantity': FieldValue.increment(-1),
+      });
+    } else {
+      await cartCollection.doc(productName).delete();
+    }
   }
 
   Stream<List<CartItem>> getCartItems() {

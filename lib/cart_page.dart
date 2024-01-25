@@ -39,7 +39,7 @@ class CartPage extends StatelessWidget {
                       subtitle: Text(
                           'Quantity: ${cartItems[index].quantity}, Total: ${cartItems[index].quantity * cartItems[index].price}'),
                       trailing: IconButton(
-                        icon: const Icon(Icons.delete),
+                        icon: const Icon(Icons.remove),
                         onPressed: () {
                           cartManager
                               .removeFromCart(cartItems[index].productName);
@@ -54,8 +54,7 @@ class CartPage extends StatelessWidget {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Đặt logic để xử lý Checkout ở đây
-                  // Ví dụ: Navigator.push(context, MaterialPageRoute(builder: (context) => CheckoutPage()));
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => CheckoutPage()));
                 },
                 child: const Text('Checkout'),
               ),
