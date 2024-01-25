@@ -250,7 +250,7 @@ class EmptyView extends StatelessWidget {
           color: Colors.red,
         ),
         Text(
-          'no product is found with this name',
+          'No product is found with this name',
           style: TextStyle(fontSize: 15),
         ),
       ],

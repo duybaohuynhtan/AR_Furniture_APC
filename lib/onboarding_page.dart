@@ -31,14 +31,14 @@ class IntroScreen extends StatelessWidget {
             title: 'Discover Your Style',
             description:
                 'Explore our catalog. Find furniture that suits your style perfectly.',
-            icon: Icons.style_outlined,
+            icon: Icons.lightbulb_outline,
             bgColor: const Color(0xfffeae4f),
           ),
           OnboardingPageModel(
             title: 'Bring Your Vision to Life',
             description:
                 'Place furniture, find your style. Start transforming your space now!',
-            icon: Icons.shopping_bag_outlined,
+            icon: Icons.home_outlined,
             bgColor: Colors.purple,
           ),
         ],
@@ -72,9 +72,7 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
-  // Store the currently visible page
   int _currentPage = 0;
-  // Define a controller for the pageview
   final PageController _pageController = PageController(initialPage: 0);
 
   @override
@@ -87,12 +85,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
           child: Column(
             children: [
               Expanded(
-                // Pageview to render each page
                 child: PageView.builder(
                   controller: _pageController,
                   itemCount: widget.pages.length,
                   onPageChanged: (idx) {
-                    // Change current page when pageview changes
                     setState(() {
                       _currentPage = idx;
                     });
@@ -117,7 +113,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           ),
                           child: Icon(
                             item.icon,
-                            size: MediaQuery.of(context).size.height * 0.3,
+                            size: 200,
                             color: item.bgColor,
                           ),
                         ),
