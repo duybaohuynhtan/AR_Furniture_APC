@@ -127,9 +127,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                         .textTheme
                                         .titleLarge
                                         ?.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: item.textColor,
-                                        )),
+                                            fontWeight: FontWeight.bold,
+                                            color: item.textColor,
+                                            fontSize: 25)),
                               ),
                               Container(
                                 constraints:
@@ -142,8 +142,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                                         .textTheme
                                         .bodyMedium
                                         ?.copyWith(
-                                          color: item.textColor,
-                                        )),
+                                            color: item.textColor,
+                                            fontSize: 15)),
                               )
                             ]))
                       ],
@@ -192,7 +192,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         },
                         child: const Text(
                           "Skip",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white, fontSize: 20),
                         )),
                     TextButton(
                       onPressed: () {
@@ -218,7 +218,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         _currentPage == widget.pages.length - 1
                             ? "Finish"
                             : "Next",
-                        style: const TextStyle(color: Colors.white),
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 20),
                       ),
                     ),
                   ],

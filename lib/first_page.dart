@@ -37,8 +37,8 @@ class FirstPage extends StatelessWidget {
                         (context as Element).markNeedsBuild();
                       })
                     ],
-                    children: [
-                      const Divider(),
+                    children: const [
+                      Divider(),
                     ],
                   ),
                 ),
