@@ -70,7 +70,7 @@ class CartPage extends StatelessWidget {
                                         width: 15,
                                       ),
                                       SizedBox(
-                                        width: 180,
+                                        width: 160,
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,

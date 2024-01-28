@@ -171,10 +171,10 @@ class SecondPage extends StatelessWidget {
                       15), // Adjust the radius for rounded corners
                 ),
                 padding: const EdgeInsets.all(17),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'About This Item',
                       style: TextStyle(
                         color: Colors.white,
@@ -182,12 +182,12 @@ class SecondPage extends StatelessWidget {
                         fontWeight: FontWeight.bold, // Make 'Description' bold
                       ),
                     ),
-                    SizedBox(
-                      height: 8,
-                    ), // Add some space between 'Description' and the rest of the text
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Text(
-                      'This is a cool 360 no scope ergonomic chair from Herman Miller.',
-                      style: TextStyle(
+                      productList[index][5],
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 15,
                       ),
@@ -206,21 +206,21 @@ class SecondPage extends StatelessWidget {
                       15), // Adjust the radius for rounded corners
                 ),
                 padding: const EdgeInsets.all(17),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'About Herman Miller',
+                    const Text(
+                      'About This Brand',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 10),
                     Text(
-                      'Overpriced ergonomic shit.',
-                      style: TextStyle(
+                      productList[index][6],
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 15,
                       ),
@@ -240,10 +240,10 @@ class SecondPage extends StatelessWidget {
                       15), // Adjust the radius for rounded corners
                 ),
                 padding: const EdgeInsets.all(17),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'From Developer',
                       style: TextStyle(
                         color: Colors.black,
@@ -251,10 +251,10 @@ class SecondPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 10),
                     Text(
-                      'Your 99% of payment will go to Ukraine.',
-                      style: TextStyle(
+                      productList[index][7],
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 15,
                       ),
